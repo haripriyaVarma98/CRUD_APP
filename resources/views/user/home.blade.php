@@ -1,7 +1,5 @@
 <x-layout>
-    <div>
-        <p> {{ session('success') }} </p>
-    </div>
+    <x-flash-msg/>
     <section class="px-6 py-8">
         <h1 class="text-center font-bold text-xl">User profile</h1>
         <main class="max-w-lg mx-auto bg-gray-100 mt-10 border border-gray-200 p-6 rounded-xl">
@@ -37,9 +35,9 @@
                                 @foreach (auth()->user()->address as $val)
                                 <tr class="p-2 w-full rounded bg-white">
                                     <td>
-                                        <input type="text" readonly value="{{ $val->address }}">
+                                        {!! nl2br($val->address) !!}
                                     </td>
-                                    <td>
+                                    <td class="float-right">
                                         <a href="/address/edit/{{$val->id}}" class='editAddress btn btn-link' title='Edit'><span
                                                 class='fa fa-edit'></span></a>
                                         <a href="/address/delete?id={{$val->id}}" class='deleteAddress btn btn-link' title='Delete'><span

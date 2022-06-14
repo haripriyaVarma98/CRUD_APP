@@ -1,5 +1,6 @@
 <x-layout>
     <section class="px-6 py-8">
+        <x-flash-msg/>
         <h1 class="text-center font-bold text-xl">Sign In</h1>
         <main class="max-w-lg mx-auto bg-gray-100 mt-10 border border-gray-200 p-6 rounded-xl">
             <form action="/login" method="post" class='mt-10'>

@@ -21,8 +21,8 @@ class SessionController extends Controller
         ]);
 
         if (auth()->attempt($attributes)) {
-            return view('user.home',[
-                'details' => User::firstWhere('username',$attributes['username']),
+            return view('user.home', [
+                'details' => User::firstWhere('username', $attributes['username']),
             ]);
             // return redirect('/home')->with('success','welcome');
         }
@@ -30,13 +30,11 @@ class SessionController extends Controller
         throw ValidationException::withMessages([
             'error' => 'Invalid credentials! please enter correct username/password'
         ]);
-
     }
 
     public function destroy()
     {
         auth()->logout();
-
-        return redirect('/')->with('success','logout successfully!');
+        return redirect()->route('login')->with('success', 'logout successfully!');
     }
 }
