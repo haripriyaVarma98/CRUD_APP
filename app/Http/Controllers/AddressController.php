@@ -39,10 +39,21 @@ class AddressController extends Controller
     public function delete()
     {
         if(!$address = UserAddress::find(request('id'))){
-            return array('status'=>'error');
+            return array('status'=>'error','msg'=>'Please try later.');
+        }
+        if (!$this->hasManyAddress($address->user)) {
+            return array('status'=>'error','msg'=>'Minimum one address should be given!');
         }
         $address->delete();
         return array('status'=>'success');
+    }
+
+    function hasManyAddress($user)
+    {
+        if($user->address->count()>1){
+            return true;
+        }
+        return false;
     }
 
 }

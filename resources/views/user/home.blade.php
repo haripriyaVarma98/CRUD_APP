@@ -68,7 +68,7 @@
                         alert('Address deleted successfully!');
                         $('#address-row-'+id).remove();
                     }else{
-                        alert('Failed to delete! Pls try later.');
+                        alert('Failed to delete!'+response.msg);
                     }
                 }
             })
