@@ -38,8 +38,11 @@ class AddressController extends Controller
 
     public function delete()
     {
-        UserAddress::find(request('id'))->delete();
-        return back();
+        if(!$address = UserAddress::find(request('id'))){
+            return array('status'=>'error');
+        }
+        $address->delete();
+        return array('status'=>'success');
     }
 
 }

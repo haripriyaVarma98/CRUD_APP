@@ -30,17 +30,17 @@
                 </label>
                 @if (auth()->user()->address ?? false)
                     <div>
-                        <table class="w-full">
+                        <table id="address-table" class="w-full">
                             <tbody>
                                 @foreach (auth()->user()->address as $val)
-                                <tr class="p-2 w-full rounded bg-white">
+                                <tr class="p-2 w-full rounded bg-white" id='address-row-{{$val->id}}'>
                                     <td>
                                         {!! nl2br($val->address) !!}
                                     </td>
                                     <td class="float-right">
                                         <a href="/address/edit/{{$val->id}}" class='editAddress btn btn-link' title='Edit'><span
                                                 class='fa fa-edit'></span></a>
-                                        <a href="/address/delete?id={{$val->id}}" class='deleteAddress btn btn-link' title='Delete'><span
+                                        <a data-id="{{$val->id}}" class='deleteAddress btn btn-link' title='Delete'><span
                                                 class='fa fa-remove'></span></a>
                                     </td>
                                 </tr>
@@ -53,3 +53,28 @@
         </main>
     </section>
 </x-layout>
+
+<script type="text/javascript">
+
+    $('.deleteAddress').click(function(){
+        if ($('#address-table tbody tr').length>1) {
+            id = $(this).data('id')
+            $.ajax({
+                url: '/address/delete?id='+id,
+                type: "GET",
+                success:function(response){
+                    console.log(response);
+                    if (response.status=='success') {
+                        alert('Address deleted successfully!');
+                        $('#address-row-'+id).remove();
+                    }else{
+                        alert('Failed to delete! Pls try later.');
+                    }
+                }
+            })
+        } else {
+            alert('Failed to delete! Minimum one address should be given!');
+        }
+    })
+
+</script>
