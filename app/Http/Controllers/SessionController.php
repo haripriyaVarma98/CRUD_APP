@@ -24,7 +24,6 @@ class SessionController extends Controller
             return view('user.home', [
                 'details' => User::firstWhere('username', $attributes['username']),
             ]);
-            // return redirect('/home')->with('success','welcome');
         }
 
         throw ValidationException::withMessages([
