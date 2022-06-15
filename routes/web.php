@@ -38,3 +38,5 @@ Route::post('/address/save',[AddressController::class,'store'])->middleware('aut
 
 Route::get('/address/edit/{id}',[AddressController::class,'edit'])->middleware('auth');
 Route::get('/address/delete',[AddressController::class,'delete'])->middleware('auth');
+
+Route::get('/users', [UserController::class,'show']);

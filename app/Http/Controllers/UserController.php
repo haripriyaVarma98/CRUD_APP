@@ -31,4 +31,10 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function show()
+    {
+        $users = User::all();
+        return view('user.list',['users' => $users]);
+    }
 }
