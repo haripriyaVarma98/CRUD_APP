@@ -34,8 +34,7 @@
                             @foreach (auth()->user()->address as $val)
                                 <tr class="p-2 w-full rounded bg-white border border-gray-200"
                                     id='address-row-{{ $val->id }}'>
-                                    <td class='address-td w-full p-2' data-id="{{ $val->id }}">
-                                        {!! nl2br($val->address) !!}</td>
+                                    <td class='address-td w-full p-2' data-id="{{ $val->id }}">{!! nl2br($val->address) !!}</td>
                                     <td class="float-right w-10 ml-2" data-id="{{ $val->id }}">
                                         <a href="#" class='editAddress btn btn-link text-blue-500 font-semibold'
                                             title='Edit'><span class='fa fa-edit'></span></a>
