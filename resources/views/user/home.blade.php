@@ -30,7 +30,7 @@
                 </label>
                 @if (auth()->user()->address ?? false)
                     <div>
-                        <table class="w-full">
+                        <table id="address-table" class="w-full">
                             <tbody>
                                 @foreach (auth()->user()->address as $val)
                                 <tr class="p-2 w-full rounded bg-white">
@@ -47,9 +47,58 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @error('address')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+                        <button id="add_new_address" title='Add New Address'
+                            class="float-right text-sm font-semibold text-white bg-blue-500 rounded-full w-5 text-center mt-2"><i
+                                class="fa fa-plus"></i>
+                        </button>
                     </div>
                 @endif
             </div>
         </main>
     </section>
 </x-layout>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        let hasAddress = $('#address-table tbody tr').length > 0 ? true : false;
+        if (!hasAddress) {
+            $('#add_new_address').trigger('click')
+            $('#add_new_address').hide()
+        }
+    })
+
+    $('#add_new_address').click(function() {
+        var new_row = `<tr class="p-2 w-full rounded">
+            <td colspan='2'>
+                <textarea class="new_address border border-gray-400 p-2 mt-1 w-full rounded"></textarea>
+            </td>
+            </tr>`;
+        $(new_row).appendTo('#address-table tbody');
+    })
+    $(document).on("keyup", ".new_address", function(e) {
+        var new_address = $(".new_address").val();
+        var currentRow = $(this).parents('tr')
+        if (e.key == "Enter") {
+            $.ajax({
+                url: '/address/save',
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "user_id": "{{ auth()->user()->id }}",
+                    "address": new_address
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        alert('Address added successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to add new address!'+response.msg);
+                    }
+                }
+            })
+        }
+    })
+</script>

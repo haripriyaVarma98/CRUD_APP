@@ -26,14 +26,10 @@ class AddressController extends Controller
 
         $attributes['user_id'] = request('user_id');
 
-        if(request('id'))
-        {
-            UserAddress::whereId(request('id'))->update($attributes);
-            
-        }else
-            UserAddress::create($attributes);
+        if(!UserAddress::create($attributes))
+            return ['status'=>'error'];
 
-        return redirect('/home');
+        return ['status'=>'success'];
     }
 
     public function delete()
