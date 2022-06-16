@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public $repo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->repo = new UserRepository;
     }
 
@@ -29,10 +30,9 @@ class UserController extends Controller
         ]);
 
         if ($user = User::create($attributes)) {
-
             auth()->login($user);
 
-            return view('user.home',[
+            return view('user.home', [
                 'details' => $user,
             ]);
         }
@@ -40,12 +40,26 @@ class UserController extends Controller
 
     public function data()
     {
-        $users = User::get();
+        $users = User::latest();
+        $start = request('start');
+        $limit = request('length');
+        if ($limit != -1) {
+            $users = $users->offset($start)
+            ->limit($limit);
+        }
+
+        $search = request('search')['value'];
+        $users = $users->filter($search)->get();
+
         $data = $this->repo->getAllUsers($users);
+
+        $totalCount = User::count();
+        $filterCount = $search ? count($data) : $totalCount;
+
         $result = [
             "draw"=> request('draw'),
-            "recordsTotal"=> count($data),
-            "recordsFiltered"=> count($data),
+            "recordsTotal"=> $totalCount,
+            "recordsFiltered"=> $filterCount,
             "data"=> $data
         ];
         echo json_encode($result);
