@@ -6,6 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/v/ju/dt-1.12.1/datatables.min.css" type="text/css"/>
+<script src="https:////cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
 
 <body style="font-family: Open Sans, sans-serif">

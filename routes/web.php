@@ -39,4 +39,7 @@ Route::post('/address/save',[AddressController::class,'store'])->middleware('aut
 Route::post('/address/update/{id}',[AddressController::class,'update'])->middleware('auth');
 Route::get('/address/delete',[AddressController::class,'delete'])->middleware('auth');
 
-Route::get('/users', [UserController::class,'show']);
+Route::get('/users', function(){
+    return view('user.list');
+});
+Route::post('/users', [UserController::class,'data'])->name('userList');

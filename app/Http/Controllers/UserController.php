@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public $repo;
+
+    public function __construct() {
+        $this->repo = new UserRepository;
+    }
+
     public function create()
     {
         return view('user.create');
@@ -25,16 +32,22 @@ class UserController extends Controller
 
             auth()->login($user);
 
-            // return redirect('/home')->with('success','account created successfully!');
             return view('user.home',[
                 'details' => $user,
             ]);
         }
     }
 
-    public function show()
+    public function data()
     {
-        $users = User::all();
-        return view('user.list',['users' => $users]);
+        $users = User::get();
+        $data = $this->repo->getAllUsers($users);
+        $result = [
+            "draw"=> request('draw'),
+            "recordsTotal"=> count($data),
+            "recordsFiltered"=> count($data),
+            "data"=> $data
+        ];
+        echo json_encode($result);
     }
 }
