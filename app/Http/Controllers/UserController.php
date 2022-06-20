@@ -13,12 +13,12 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->service =  new UserService();
+        $this->service = new UserService();
     }
 
     public function create()
     {
-        return view('user.create',['companies' => Company::get()]);
+        return view('user.create', ['companies' => Company::get()]);
     }
 
     public function store()
@@ -48,9 +48,8 @@ class UserController extends Controller
     {
         $filter = $this->service->getInputData();
         $users = $this->service->filterUsers($filter);
-        if ($users) {
-           $data = $this->service->getOutputData($users);
-        }
+        $data = $this->service->getOutputData($users);
+        
         $totalCount = User::count();
         $filterCount = $data ? count($data) : $totalCount;
 
