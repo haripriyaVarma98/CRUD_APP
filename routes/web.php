@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('user.create');
+    return redirect('register');
 });
 
 Route::get('register', [UserController::class,'create'])->middleware('guest');
@@ -39,7 +39,5 @@ Route::post('/address/save',[AddressController::class,'store'])->middleware('aut
 Route::post('/address/update/{id}',[AddressController::class,'update'])->middleware('auth');
 Route::get('/address/delete',[AddressController::class,'delete'])->middleware('auth');
 
-Route::get('/users', function(){
-    return view('user.list');
-});
+Route::get('/users',[UserController::class,'show']);
 Route::post('/users', [UserController::class,'data'])->name('userList');

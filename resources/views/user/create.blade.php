@@ -34,6 +34,20 @@
                     @enderror
                 </div>
                 <div class="mb-6">
+                    <label for="company" class="block mb-2 uppercase font-bold text-xs text-gray-700">
+                        company
+                    </label>
+                    <select name="company_id" id="company_id" value="{{old('company_id')}}" class="border border-gray-400 p-2 w-full rounded" >
+                        <option value="">Please select</option>
+                        @foreach ($companies as $key => $company)
+                            <option value="{{$company->id}}">{{$company->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('company_id')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-6">
                     <label for="password" class="block mb-2 uppercase font-bold text-xs text-gray-700">
                         password
                     </label>
