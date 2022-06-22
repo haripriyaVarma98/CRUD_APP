@@ -32,7 +32,6 @@ class UserController extends Controller
             'company_id' => 'required',
             'department_id' => 'required',
         ]);
-        
         if ($user = User::create($attributes)) {
             auth()->login($user);
 
