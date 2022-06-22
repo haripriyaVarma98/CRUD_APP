@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -41,3 +42,8 @@ Route::get('/address/delete',[AddressController::class,'delete'])->middleware('a
 
 Route::get('/users',[UserController::class,'show']);
 Route::post('/users', [UserController::class,'data'])->name('userList');
+
+Route::get('/home/applyLeave', function() {
+    return view('user.leave');
+})->middleware('auth');
+Route::post('/home/applyLeave', [LeaveRequestController::class,'store']);

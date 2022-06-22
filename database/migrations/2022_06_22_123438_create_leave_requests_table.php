@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('hike_percentage');
-            $table->integer('total_leave_days');
+            $table->foreignId('user_id')->constrained();
+            $table->date('requested_date');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('leave_requests');
     }
 };
