@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Department extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
-        'hike_percentage'
+        'basic_salary'
     ];
 
     public function user()

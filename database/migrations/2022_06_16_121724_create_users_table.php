@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->foreignId('company_id')->constrained();
+            $table->foreignId('department_id')->constrained();
+            $table->integer('years_of_experience')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

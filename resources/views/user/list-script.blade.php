@@ -21,6 +21,7 @@ var table = $('#usersTable').DataTable({
         { data: 'email' },
         { data: 'address' },
         { data: 'company' },
+        { data: 'current_salary' },
     ],
     paging: true,
     // scrollY: 300,

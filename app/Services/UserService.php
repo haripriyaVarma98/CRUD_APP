@@ -63,8 +63,22 @@ class UserService
             $data['email'] = $user->email;
             $data['address'] = $user->address->count() ? $user->address->first()->address : '-';
             $data['company'] = $user->company->name;
+            $data['current_salary'] = $this->calculateCurrentSalary($user);
             $finalData[] = $data;
         }
         return $finalData;
+    }
+
+    public function calculateCurrentSalary($user)
+    {
+        $hike_percentage = $user->company->hike_percentage ?? 0;
+        $basic_salary = $user->department->basic_salary ?? 0;
+        $currentSalary = $user->current_salary ?? $basic_salary;
+        if (!empty($hike_percentage)) {
+            for ($i=1; $i<= $user->years_of_experience; $i++) {
+                $currentSalary += $currentSalary*$hike_percentage/100;
+            }
+        }
+        return round($currentSalary);
     }
 }
