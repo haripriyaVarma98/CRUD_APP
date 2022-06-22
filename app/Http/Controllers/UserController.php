@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create', ['companies' => Company::get()]);
+        return view('user.create', ['companies' => Company::get(), 'departments' => Department::get()]);
     }
 
     public function store()
@@ -29,8 +30,9 @@ class UserController extends Controller
             'password' => 'required|min:4|max:8',
             'username' => 'required|min:4|max:10|unique:users,username',
             'company_id' => 'required',
+            'department_id' => 'required',
         ]);
-
+        
         if ($user = User::create($attributes)) {
             auth()->login($user);
 
@@ -48,11 +50,9 @@ class UserController extends Controller
     {
         $filter = $this->service->getInputData();
         $users = $this->service->filterUsers($filter);
-        $data = $this->service->getOutputData($users);
-        
+        $data = $this->service->getOutputData($users);        
         $totalCount = User::count();
         $filterCount = $data ? count($data) : $totalCount;
-
         $result = [
             "draw"=> request('draw'),
             "recordsTotal"=> $totalCount,

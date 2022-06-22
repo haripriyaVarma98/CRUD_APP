@@ -17,6 +17,7 @@
                             @endforeach
                         </select> --}}
                     </th>
+                    <th>Current Salary</th>
                 </tr>
             </thead>
             <tbody></tbody>
