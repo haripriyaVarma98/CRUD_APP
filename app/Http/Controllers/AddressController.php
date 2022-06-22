@@ -12,12 +12,6 @@ class AddressController extends Controller
         return view('address.create');
     }
     
-    public function edit()
-    {
-        $address = UserAddress::find(request('id'));
-        return view('address.create',['data'=>$address]);
-    }
-
     public function store()
     {
         $attributes = request()->validate([
@@ -26,20 +20,42 @@ class AddressController extends Controller
 
         $attributes['user_id'] = request('user_id');
 
-        if(request('id'))
-        {
-            UserAddress::whereId(request('id'))->update($attributes);
-            
-        }else
-            UserAddress::create($attributes);
+        if(!UserAddress::create($attributes))
+            return ['status'=>'error'];
 
-        return redirect('/home');
+        return ['status'=>'success'];
+    }
+
+    public function update($id)
+    {
+        if (!$address = UserAddress::find($id)) {
+            return array('status'=>'error');
+        }
+        $attributes = request()->validate([
+            'address' => 'required|max:255'
+        ]);
+        $address->update($attributes);
+        return array('status'=>'success');
     }
 
     public function delete()
     {
-        UserAddress::find(request('id'))->delete();
-        return back();
+        if(!$address = UserAddress::find(request('id'))){
+            return array('status'=>'error','msg'=>'Please try later.');
+        }
+        if (!$this->hasManyAddress($address->user)) {
+            return array('status'=>'error','msg'=>'Minimum one address should be given!');
+        }
+        $address->delete();
+        return array('status'=>'success');
+    }
+
+    function hasManyAddress($user)
+    {
+        if($user->address->count()>1){
+            return true;
+        }
+        return false;
     }
 
 }

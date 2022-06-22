@@ -36,5 +36,7 @@ Route::post('logout', [SessionController::class,'destroy'])->middleware('auth');
 Route::get('address',[AddressController::class,'create'])->middleware('auth');
 Route::post('/address/save',[AddressController::class,'store'])->middleware('auth');
 
-Route::get('/address/edit/{id}',[AddressController::class,'edit'])->middleware('auth');
+Route::post('/address/update/{id}',[AddressController::class,'update'])->middleware('auth');
 Route::get('/address/delete',[AddressController::class,'delete'])->middleware('auth');
+
+Route::get('/users', [UserController::class,'show']);

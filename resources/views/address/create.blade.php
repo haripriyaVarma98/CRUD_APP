@@ -12,9 +12,7 @@
                     <label for="address" class="block mb-2 uppercase font-bold text-xs text-gray-700">
                         New address
                     </label>
-                    <textarea class="border border-gray-400 p-2 w-full rounded" type="textarea" name="address" id="address"
-                        value="{{$data->address ?? ''}}" required>{{$data->address ?? ''}}</textarea>
-                        <input type="hidden" name='id' value="{{$data->id ?? 0}}">
+                    <textarea class="border border-gray-400 p-2 w-full rounded" type="textarea" name="address" id="address" required></textarea>
                     @error('address')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
