@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\Department;
 use App\Models\User;
-use App\Repositories\UserRepository;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public $repo;
+    public $service;
 
     public function __construct()
     {
-        $this->repo = new UserRepository;
+        $this->service = new UserService();
     }
 
     public function create()
     {
-        return view('user.create');
+        return view('user.create', ['companies' => Company::get(), 'departments' => Department::get()]);
     }
 
     public function store()
@@ -27,8 +29,9 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:4|max:8',
             'username' => 'required|min:4|max:10|unique:users,username',
+            'company_id' => 'required',
+            'department_id' => 'required',
         ]);
-
         if ($user = User::create($attributes)) {
             auth()->login($user);
 
@@ -38,24 +41,17 @@ class UserController extends Controller
         }
     }
 
+    public function show(){
+        return view('user.list',['companies'=>Company::get()]);
+    }
+
     public function data()
     {
-        $users = User::latest();
-        $start = request('start');
-        $limit = request('length');
-        if ($limit != -1) {
-            $users = $users->offset($start)
-            ->limit($limit);
-        }
-
-        $search = request('search')['value'];
-        $users = $users->filter($search)->get();
-
-        $data = $this->repo->getAllUsers($users);
-
+        $filter = $this->service->getInputData();
+        $users = $this->service->filterUsers($filter);
+        $data = $this->service->getOutputData($users);        
         $totalCount = User::count();
-        $filterCount = $search ? count($data) : $totalCount;
-
+        $filterCount = $data ? count($data) : $totalCount;
         $result = [
             "draw"=> request('draw'),
             "recordsTotal"=> $totalCount,

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -17,12 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,18 +41,13 @@ class User extends Authenticatable
         return $this->hasMany(UserAddress::class);
     }
 
-    public function scopeFilter($query, $search)
+    public function company()
     {
-        $query->when($search ?? false, fn ($query, $search) =>
-            $query->where(fn ($query) =>
-                $query->where('name', 'like', '%'.$search.'%')
-                ->orWhere('username', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%')
-                ->orWhereHas('address', fn ($query)=>
-                    $query->where('address', 'like', '%'.$search.'%')
-                )
-            )
-        );
-            
+        return $this->belongsTo(Company::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }
