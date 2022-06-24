@@ -30,6 +30,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($user) {
+            $user->available_leave_days = $user->company->total_leave_days;
+        });
+    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
@@ -49,5 +57,10 @@ class User extends Authenticatable
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function leave()
+    {
+        return $this->hasMany(LeaveRequest::class);
     }
 }

@@ -40,10 +40,15 @@ Route::post('/address/save',[AddressController::class,'store'])->middleware('aut
 Route::post('/address/update/{id}',[AddressController::class,'update'])->middleware('auth');
 Route::get('/address/delete',[AddressController::class,'delete'])->middleware('auth');
 
-Route::get('/users',[UserController::class,'show']);
+Route::get('/users',[UserController::class,'show'])->middleware('admin');
 Route::post('/users', [UserController::class,'data'])->name('userList');
 
 Route::get('/home/applyLeave', function() {
     return view('user.leave');
 })->middleware('auth');
 Route::post('/home/applyLeave', [LeaveRequestController::class,'store']);
+
+Route::get('/appliedLeaves',[LeaveRequestController::class,'show'])->middleware('admin');
+Route::post('/appliedLeaves/reject',[LeaveRequestController::class,'reject'])->middleware('admin');
+Route::post('/appliedLeaves/approve',[LeaveRequestController::class,'approve'])->middleware('admin');
+Route::post('/appliedLeaves/massAction',[LeaveRequestController::class,'massApproveOrReject'])->middleware('admin');

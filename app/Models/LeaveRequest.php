@@ -13,4 +13,9 @@ class LeaveRequest extends Model
         'user_id',
         'requested_date',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
