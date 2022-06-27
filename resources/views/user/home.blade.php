@@ -61,6 +61,11 @@
                     </button>
                 </div>
             </div>
+            <div class="mb-6 form-inline">
+                <a href="/home/applyLeave" class="block mb-2 font-bold text-xs text-blue-500" id="applyLeave">
+                    Apply Leave
+                </a>
+            </div>
         </main>
     </section>
 </x-layout>
