@@ -8,7 +8,10 @@ class UserRepository
 {
     public function getAllUsers()
     {
-        $users = User::latest();
+        $users = User::query()
+        ->select('users.id','name','username','email','company_id','department_id')
+        ->with(['address','company:id,name,hike_percentage','department:id,basic_salary'])
+        ->latest();
         return $users;
     }
 

@@ -23,6 +23,9 @@ class LeaveRequestController extends Controller
             if (!$this->service->checkLeaveAvailability(User::find($attributes['user_id']))) {
                 return ['status'=>'error','msg'=>'Insufficient leave balance!'];
             }
+            if ($this->service->isAlreadyAppliedDate($attributes['user_id'], $attributes['requested_date'])) {
+                return ['status'=>'error','msg'=>'Already applied!'];
+            }
             if(!LeaveRequest::create($attributes))
                 return ['status'=>'error'];
 
@@ -32,7 +35,9 @@ class LeaveRequestController extends Controller
 
     public function show()
     {
-        return view('leaveRequest.list',['data' => LeaveRequest::get()]);
+        return view('leaveRequest.list',[
+            'data' => LeaveRequest::select('id','user_id','requested_date')->with('user:id,name,available_leave_days')->get()
+        ]);
     }
 
     public function approve()

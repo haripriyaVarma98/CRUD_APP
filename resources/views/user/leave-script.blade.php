@@ -24,12 +24,12 @@
                     toastr.success('Leave applied successfully!');
                     setTimeout(function() {
                         window.location.replace("{{route('home')}}");
-                    }, 2000);
+                    }, 1000);
                 } else {
                     toastr.error(response.msg ? response.msg : 'Failed to apply leave! please try later');
                     setTimeout(function() {
                         window.location.replace("{{route('home')}}");
-                    }, 2000);
+                    }, 1000);
                 }
             }
         })

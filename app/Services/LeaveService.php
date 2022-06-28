@@ -42,4 +42,15 @@ class LeaveService
         }
         return true;
     }
+
+    public function isAlreadyAppliedDate($user_id, $date)
+    {
+        $leaveArr = LeaveRequest::where('user_id', $user_id)->get();
+        foreach ($leaveArr as $key => $leave) {
+            if($date == $leave->requested_date){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -20,12 +20,13 @@
 <body style="font-family: Open Sans, sans-serif">
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">
-            <div>
-                {{-- @auth
-                <a href="/address" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                    Add New Address
-                </a>
-                @endauth --}}
+            <div class="mt-8 md:mt-0 flex items-center">
+                @auth
+                @if (auth()->user()->username == 'admin')
+                    <a href="/users" class="text-s text-blue-500 ml-6">Users</a>
+                    <a href="/appliedLeaves" class="text-s text-blue-500 ml-6">Leave requests</a>
+                @endif
+                @endauth
             </div>
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
