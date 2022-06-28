@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -52,3 +54,12 @@ Route::get('/appliedLeaves',[LeaveRequestController::class,'show'])->middleware(
 Route::post('/appliedLeaves/reject',[LeaveRequestController::class,'reject'])->middleware('admin');
 Route::post('/appliedLeaves/approve',[LeaveRequestController::class,'approve'])->middleware('admin');
 Route::post('/appliedLeaves/massAction',[LeaveRequestController::class,'massApproveOrReject'])->middleware('admin');
+
+Route::get('/categories',[CategoryController::class,'show'])->name('category');
+Route::post('/categories/save',[CategoryController::class,'store']);
+Route::post('/categories/update',[CategoryController::class,'update']);
+Route::post('/categories/delete',[CategoryController::class,'destroy']);
+
+Route::get('/blogs',[BlogController::class,'show'])->name('blog');
+Route::get('/blogs/{blog:slug}', [BlogController::class,'view']);
+
