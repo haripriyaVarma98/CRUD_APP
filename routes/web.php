@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -61,5 +62,10 @@ Route::post('/categories/update',[CategoryController::class,'update']);
 Route::post('/categories/delete',[CategoryController::class,'destroy']);
 
 Route::get('/blogs',[BlogController::class,'show'])->name('blog');
+Route::get('/blogs/create',[BlogController::class,'create']);
 Route::get('/blogs/{blog:slug}', [BlogController::class,'view']);
+Route::post('/blogs/save',[BlogController::class,'store']);
+
+Route::post('/blog/addComment',[CommentController::class,'store']);
+Route::get('/blog-list',[BlogController::class,'list']);
 
