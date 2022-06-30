@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\User;
+use App\Services\BlogService;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = new BlogService;
+    }
+
     public function create()
     {
         return view('Blog.create',[
@@ -19,14 +27,16 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        if(!$request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
             'brief' => 'required',
             'category' => 'required',
             'author' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ])){
+            dd(response('errors'));exit;
+        }
         $imageName = time().'.'.$request->image->extension();
         if (!$request->image->move(public_path('uploadedImages'), $imageName)) {
             return ['status'=>'error'];
@@ -49,15 +59,36 @@ class BlogController extends Controller
         return view('Blog.list',['blogs'=>Blog::latest()->paginate(6)]);
     }
 
-    public function list()
-    {
-        return view('Blog.table',[
-            'blogs'=>Blog::latest()->with('author','comments','category')->paginate(6)
-        ]);
-    }
-
     public function view(Blog $blog)
     {
         return view('Blog.content',['blog'=>$blog,'comments' => $blog->comments->sortByDesc('created_at')]);
+    }
+
+    public function filter()
+    {
+        return view('Blog.filter',[
+            'categories' => Category::select('id','name')->get(),
+            'authors' => User::select('id','name')->get(),
+        ]);
+    }
+
+    public function list()
+    {
+        $data = $this->service->filterBlogs();
+        return  view('Blog.table',[
+            'blogs' => $data,
+        ]);
+    }
+
+    public function destroy()
+    {
+        $id  = request('id');
+        if (!$id) {
+            return ['status'=>'error'];
+        }
+        if (!Blog::whereId($id)->delete()) {
+            return ['status'=>'error'];
+        }
+        return ['status'=>'success'];
     }
 }

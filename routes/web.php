@@ -67,5 +67,7 @@ Route::get('/blogs/{blog:slug}', [BlogController::class,'view']);
 Route::post('/blogs/save',[BlogController::class,'store']);
 
 Route::post('/blog/addComment',[CommentController::class,'store']);
-Route::get('/blog-list',[BlogController::class,'list']);
+Route::get('/blog-list',[BlogController::class,'filter']);
+Route::post('/blog-list',[BlogController::class,'list']);
+Route::get('/blog/delete',[BlogController::class,'destroy']);
 

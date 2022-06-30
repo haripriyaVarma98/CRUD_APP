@@ -10,13 +10,15 @@
         processData: false,
         contentType: false,                      
         success: function (response) {
-            // response = $.parseJSON(response);
             if(response.status=='success'){
                 toastr.success('Successfully created new blog!');
                 window.location.replace("{{route('blog')}}");
             } else {
                 toastr.error('Failed to create! please try later.');
             }
+        },
+        error: function (response) {
+            console.log(response.responseJSON);
         }
     });
 });

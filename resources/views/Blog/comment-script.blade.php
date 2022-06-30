@@ -31,7 +31,7 @@
         var newRow = `<section class="flex text-m bg-gray-100 border border-gray-200 rounded-xl px-8 py-4 my-4">
                         <div class="comment-body">
                             <header class="comment-row ">
-                                <h3 class="font-bold">`+"{{auth()->user()->name}}"+`</h3>
+                                <h3 class="font-bold">`+"{{auth()->user()->name ?? ''}}"+`</h3>
                                 <p class="text-xs">Commented <time> just now </time></p>
                             </header>
                             <p>`+comment+`</p>

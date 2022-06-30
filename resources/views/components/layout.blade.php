@@ -1,5 +1,5 @@
 <!doctype html>
-
+<head>
 <title>Laravel CRUD app</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,7 +16,8 @@
 <link href="/toastr/build/toastr.css" rel="stylesheet">
 <script src="/toastr/toastr.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+</head>
 <body style="font-family: Open Sans, sans-serif">
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">

@@ -47,7 +47,7 @@
                         <label for="title" class="block mb-2 uppercase font-bold text-xs text-gray-700">
                             Title
                         </label>
-                        <input class="border border-gray-400 p-2 w-full rounded" type="text" name="title" id="title" value="{{old('title')}}" required placeholder="enter the title of blog">
+                        <input class="border border-gray-400 p-2 w-full rounded" type="text" name="title" id="title" value="{{old('title')}}" placeholder="enter the title of blog">
                         @error('title')
                             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                         @enderror
@@ -74,7 +74,7 @@
                         <label for="image" class="block mb-2 uppercase font-bold text-xs text-gray-700">
                             Image
                         </label>
-                        <input class="border border-gray-400 p-2 w-full rounded" type="file" name="image" id="image" required accept=".jpg, .png, .gif, .jpeg">
+                        <input class="border border-gray-400 p-2 w-full rounded" type="file" name="image" id="image" accept=".jpg, .png, .gif, .jpeg">
                         @error('image')
                             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                         @enderror
