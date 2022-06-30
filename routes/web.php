@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -71,3 +72,5 @@ Route::get('/blog-list',[BlogController::class,'filter']);
 Route::post('/blog-list',[BlogController::class,'list']);
 Route::get('/blog/delete',[BlogController::class,'destroy']);
 
+Route::get('/timezone',[CountryController::class,'view']);
+Route::post('/timezone',[CountryController::class,'getTime']);
